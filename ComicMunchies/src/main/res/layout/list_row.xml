@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:padding="5dp"
+    android:background="@drawable/list_selector">
+
+    <LinearLayout
+        android:id="@+id/left_thumbnail"
+        android:padding="3dp"
+        android:background="@drawable/image_bg"
+        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+        <ImageView
+            android:id="@+id/book_image"
+            android:layout_height="50dp"
+            android:layout_width="50dp" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignTop="@+id/left_thumbnail"
+        android:layout_toRightOf="@+id/left_thumbnail"
+        android:text="title"/>
+    <TextView
+        android:id="@+id/book_desc"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_below="@+id/book_title"
+        android:layout_toRightOf="@+id/left_thumbnail"
+        android:text="desc"/>
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@android:drawable/arrow_down_float"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

@@ -17,7 +17,7 @@
             android:name="com.comicmunchies.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/FullscreenActionBarStyle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,5 +25,7 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
