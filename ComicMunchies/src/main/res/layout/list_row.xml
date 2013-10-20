@@ -13,10 +13,19 @@
         android:layout_marginRight="5dp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
-        <ImageView
-            android:id="@+id/book_image"
-            android:layout_height="100dp"
-            android:layout_width="100dp" />
+        <FrameLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <ImageView
+                android:id="@+id/book_image"
+                android:layout_height="100dp"
+                android:layout_width="100dp" />
+            <ImageView
+                android:id="@+id/new_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/new_notification"/>
+            </FrameLayout>
     </LinearLayout>
     <TextView
         android:id="@+id/book_title"
@@ -37,13 +46,12 @@
         android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/left_thumbnail"
         android:text="desc"/>
-    <TextView
+    <ImageView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="&gt;"
-        android:textSize="40dp"
         android:background="@android:color/transparent"
+        android:src="@drawable/circle_triangle"
         android:layout_centerVertical="true" />
 
 </RelativeLayout>

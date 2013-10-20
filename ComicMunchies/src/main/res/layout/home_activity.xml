@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/splash_page_main"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_margin="10dp">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/dropbox_btn"
+            android:drawableLeft="@drawable/dropbox"
+            android:background="@color/btn_background"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:textColor="@android:color/white"
+            android:text="Open With Dropbox"/>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/folder_btn"
+            android:drawableLeft="@drawable/folder_on"
+            android:background="@color/btn_background"
+            android:text="Open Folder"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_margin="10dp"/>
+        </LinearLayout>
+
+</RelativeLayout>

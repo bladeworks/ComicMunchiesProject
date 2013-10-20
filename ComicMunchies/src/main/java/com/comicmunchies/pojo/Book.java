@@ -15,6 +15,16 @@ public class Book {
      */
     private String thumbUrl;
 
+    private int readingPage = -1;
+
+    public int getReadingPage() {
+        return readingPage;
+    }
+
+    public void setReadingPage(int readingPage) {
+        this.readingPage = readingPage;
+    }
+
     public String getTitle() {
         return title;
     }

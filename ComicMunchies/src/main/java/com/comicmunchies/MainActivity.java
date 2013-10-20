@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         for (int i = 0; i < 5; i++ ){
 
             Book book = new Book();
+//            if (i > 2) book.setReadingPage(10);
             book.setTitle("title " + i);
             book.setDesc("Desc goes to here");
             book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
@@ -68,7 +69,13 @@ public class MainActivity extends Activity {
         super.onPostCreate(savedInstanceState);
     }
 
-//    static final int REQUEST_LINK_TO_DBX = 0;  // This value is up to you
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    //    static final int REQUEST_LINK_TO_DBX = 0;  // This value is up to you
 //
 //    public void onClickLinkToDropbox(View view) {
 //        mDbxAcctMgr.startLink((Activity)this, REQUEST_LINK_TO_DBX);

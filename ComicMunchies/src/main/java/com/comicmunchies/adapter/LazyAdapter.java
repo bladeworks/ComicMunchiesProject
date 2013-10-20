@@ -57,7 +57,11 @@ public class LazyAdapter extends BaseAdapter {
         TextView titleView = (TextView) v.findViewById(R.id.book_title);
         TextView descView = (TextView) v.findViewById(R.id.book_desc);
         ImageView imageView = (ImageView) v.findViewById(R.id.book_image);
+        ImageView newIconView = (ImageView) v.findViewById(R.id.new_icon);
         Book itemData = data.get(position);
+        if (itemData.getReadingPage() > 0) {
+            newIconView.setVisibility(View.INVISIBLE);
+        }
         titleView.setText(itemData.getTitle());
         descView.setText(itemData.getDesc());
         imageView.setImageBitmap(BitmapFactory.decodeFile(itemData.getThumbUrl()));
