@@ -17,15 +17,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxFile;
+import com.dropbox.sync.android.DbxFileInfo;
+import com.dropbox.sync.android.DbxFileSystem;
+import com.dropbox.sync.android.DbxPath;
+
 public class MainActivity extends Activity {
 
     private ListView listView;
     private LazyAdapter adapter;
     private List<Book> data;
 
+    private DbxAccountManager mDbxAcctMgr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "t6aisc2sisxwcj5", "1b59otfba2ivxma");
 
         setContentView(R.layout.main_activity);
 
@@ -57,5 +67,24 @@ public class MainActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
+
+//    static final int REQUEST_LINK_TO_DBX = 0;  // This value is up to you
+//
+//    public void onClickLinkToDropbox(View view) {
+//        mDbxAcctMgr.startLink((Activity)this, REQUEST_LINK_TO_DBX);
+//    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == REQUEST_LINK_TO_DBX) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                // ... Start using Dropbox files.
+//            } else {
+//                // ... Link failed or was cancelled by the user.
+//            }
+//        } else {
+//            super.onActivityResult(requestCode, resultCode, data);
+//        }
+//    }
 
 }
