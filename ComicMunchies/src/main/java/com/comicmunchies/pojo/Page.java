@@ -5,6 +5,10 @@ package com.comicmunchies.pojo;
  */
 public class Page {
     private int no;
+
+    /*
+    The local file path such as /data/data/com.comicmunchies/cache/page1.jpg
+     */
     private String path;
 
 

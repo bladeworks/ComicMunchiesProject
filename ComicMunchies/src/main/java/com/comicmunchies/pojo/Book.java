@@ -9,6 +9,10 @@ public class Book {
 
     private String title;
     private String desc;
+
+    /*
+    This is the local file path for the thumb such as /data/data/com.comicmunchies/thumb.jpg.
+     */
     private String thumbUrl;
 
     public String getTitle() {
