@@ -36,25 +36,6 @@ public class MainActivity extends Activity {
             book.setTitle("title " + i);
             book.setDesc("Desc goes to here");
             book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
-            List<Page> pages = new ArrayList<Page>();
-
-            Page page = new Page();
-            page.setNo(1);
-            page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
-            pages.add(page);
-
-            page = new Page();
-            page.setNo(2);
-            page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/405.jpg");
-            pages.add(page);
-
-            page = new Page();
-            page.setNo(2);
-            page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/555.jpg");
-            pages.add(page);
-
-            book.setPages(pages);
-
             data.add(book);
         }
 
