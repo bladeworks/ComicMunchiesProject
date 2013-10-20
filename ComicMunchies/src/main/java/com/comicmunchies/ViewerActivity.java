@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -35,24 +36,21 @@ public class ViewerActivity extends Activity{
         Bitmap bitmap = BitmapFactory.decodeFile(Global.currentReadingBook.getThumbUrl());
         List<Page> pages = new ArrayList<Page>();
 
-
-        //x = getResources().getIdentifier("test.jpg","manga",getPackageName());
-       // String s = "android.resource://com.comicmunchies/res/test.jpg";
-        //Uri u = Uri.parse(s);
+        String name = Global.currentReadingBook.getBookName();
 
         Page page = new Page();
         page.setNo(1);
-        page.setPath("/sdcard/Pictures/test/test.jpg");
+        page.setPath("/sdcard/Pictures/test/" + name + "/1.jpg");
         pages.add(page);
 
         page = new Page();
         page.setNo(2);
-        page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/405.jpg");
+        page.setPath("/sdcard/Pictures/test/" + name + "/2.jpg");
         pages.add(page);
 
         page = new Page();
         page.setNo(2);
-        page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/555.jpg");
+        page.setPath("/sdcard/Pictures/test/" + name + "/3.jpg");
         pages.add(page);
 
         ImagePagerAdapter adapter = new ImagePagerAdapter(pages);
@@ -72,7 +70,7 @@ public class ViewerActivity extends Activity{
         @Override
         public int getCount() {
             if (pagePosition < (pages.size() - 1)) {
-                return frames.size() + 10;
+                return frames.size() + 1 ;// + 10;
             }
             return frames.size();
         }
@@ -84,25 +82,38 @@ public class ViewerActivity extends Activity{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Context context = ViewerActivity.this;
-            FrameExtractor fe = new FrameExtractor();
+            Context context   = ViewerActivity.this;
+            final ImageView imageView = new ImageView(context);
+            int padding = context.getResources().getDimensionPixelOffset(R.dimen.padding_medium);
+            imageView.setPadding(padding, padding, padding, padding);
+            imageView.setImageBitmap(BitmapFactory.decodeFile("/sdcard/Pictures/test/loading.png"));
+            container.addView(imageView,0);
 
             if (position >= frames.size()) {
                 // frame extraction
                 if (pagePosition < (pages.size() - 1)) {
                     pagePosition++;
- //                   frames.add(pages.get(pagePosition).getPath());
- //                   frames.add(pages.get(pagePosition).getPath());
-                    frames.addAll(fe.getFrameList(pages.get(pagePosition)));
-                    notifyDataSetChanged();
+                    final ImagePagerAdapter ipa = this;
+                    final int cPosition = position;
+                    AsyncTask<Page,Void,List<Bitmap>> bg = new AsyncTask<Page,Void,List<Bitmap>>() {
+                        protected List<Bitmap> doInBackground(Page... p) {
+                            FrameExtractor fe = new FrameExtractor();
+                            return fe.getFrameList(p[0]);
+                        }
+
+                        protected void onPostExecute(List<Bitmap> newFrames) {
+                            frames.addAll(newFrames);
+                            ipa.notifyDataSetChanged();
+                            imageView.setImageBitmap(frames.get(cPosition));
+                            System.err.println("New frame:" + frames.get(cPosition));
+                        }
+                    };
+                    bg.execute(pages.get(pagePosition));
+                    return imageView;
                 }
             }
-            ImageView imageView = new ImageView(context);
-            int padding = context.getResources().getDimensionPixelOffset(R.dimen.padding_medium);
-            imageView.setPadding(padding, padding, padding, padding);
-//            imageView.setImageBitmap(BitmapFactory.decodeFile(frames.get(position)));
+            // if we didn't have to start a bg process just use the already processed image
             imageView.setImageBitmap(frames.get(position));
-            container.addView(imageView, 0);
             return imageView;
         }
 
