@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.comicmunchies.common.Global;
+import com.comicmunchies.ip.FrameExtractor;
 import com.comicmunchies.pojo.Page;
 
 import java.util.ArrayList;
@@ -33,9 +35,14 @@ public class ViewerActivity extends Activity{
         Bitmap bitmap = BitmapFactory.decodeFile(Global.currentReadingBook.getThumbUrl());
         List<Page> pages = new ArrayList<Page>();
 
+
+        //x = getResources().getIdentifier("test.jpg","manga",getPackageName());
+       // String s = "android.resource://com.comicmunchies/res/test.jpg";
+        //Uri u = Uri.parse(s);
+
         Page page = new Page();
         page.setNo(1);
-        page.setPath("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
+        page.setPath("/sdcard/Pictures/test/test.jpg");
         pages.add(page);
 
         page = new Page();
@@ -55,7 +62,7 @@ public class ViewerActivity extends Activity{
     private class ImagePagerAdapter extends PagerAdapter {
 
         List<Page> pages;
-        List<String> frames = new ArrayList<String>();
+        List<Bitmap> frames = new ArrayList<Bitmap>();
         int pagePosition = -1;
 
         public ImagePagerAdapter(List<Page> p) {
@@ -78,19 +85,23 @@ public class ViewerActivity extends Activity{
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Context context = ViewerActivity.this;
+            FrameExtractor fe = new FrameExtractor();
+
             if (position >= frames.size()) {
                 // frame extraction
                 if (pagePosition < (pages.size() - 1)) {
                     pagePosition++;
-                    frames.add(pages.get(pagePosition).getPath());
-                    frames.add(pages.get(pagePosition).getPath());
+ //                   frames.add(pages.get(pagePosition).getPath());
+ //                   frames.add(pages.get(pagePosition).getPath());
+                    frames.addAll(fe.getFrameList(pages.get(pagePosition)));
                     notifyDataSetChanged();
                 }
             }
             ImageView imageView = new ImageView(context);
             int padding = context.getResources().getDimensionPixelOffset(R.dimen.padding_medium);
             imageView.setPadding(padding, padding, padding, padding);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(frames.get(position)));
+//            imageView.setImageBitmap(BitmapFactory.decodeFile(frames.get(position)));
+            imageView.setImageBitmap(frames.get(position));
             container.addView(imageView, 0);
             return imageView;
         }

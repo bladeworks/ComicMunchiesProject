@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
             Book book = new Book();
             book.setTitle("title " + i);
             book.setDesc("Desc goes to here");
-            book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
+//            book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
             data.add(book);
         }
 
