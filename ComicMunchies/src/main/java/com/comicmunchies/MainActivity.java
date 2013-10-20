@@ -2,6 +2,7 @@ package com.comicmunchies;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,11 +32,15 @@ public class MainActivity extends Activity {
 
     private ListView listView;
     private LazyAdapter adapter;
-    private List<Book> data;
+    private List<Book> data, manga;
     private TextView mTestOutput;
     private Button mLinkButton;
+    private ListView dbxList;
 
     private DbxAccountManager mDbxAcctMgr;
+    private static final String APP_KEY = "bqmodvepz6wz8mh";
+    private static final String APP_SECRET = "nsb9k29gdqfdz0u";
+    DbxFileSystem dbxFs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "bqmodvepz6wz8mh", "nsb9k29gdqfdz0u");
+        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), APP_KEY, APP_SECRET);
 
         data = new ArrayList<Book>();
         for (int i = 0; i < 5; i++ ){
@@ -64,6 +69,10 @@ public class MainActivity extends Activity {
             book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
             data.add(book);
         }
+
+        manga = new ArrayList<Book>();
+
+        dbxList = (ListView) findViewById(R.id.dbx_list);
 
         listView = (ListView) findViewById(R.id.book_list);
         adapter = new LazyAdapter(this, data);
@@ -88,8 +97,21 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if (mDbxAcctMgr.hasLinkedAccount()) {
+            showLinkedView();
             doDropboxTest();
+        } else {
+            showUnlinkedView();
         }
+    }
+
+    private void showLinkedView() {
+        mLinkButton.setVisibility(View.GONE);
+        mTestOutput.setVisibility(View.VISIBLE);
+    }
+
+    private void showUnlinkedView() {
+        mLinkButton.setVisibility(View.VISIBLE);
+        mTestOutput.setVisibility(View.GONE);
     }
 
     static final int REQUEST_LINK_TO_DBX = 0;  // This value is up to you
@@ -110,53 +132,70 @@ public class MainActivity extends Activity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+//    private class syncDropBox extends AsyncTask<Void, Void, Boolean> {
+//        boolean result = false;
+//
+//        @Override
+//        protected Boolean doInBackground(Void... paramArrayOfParams) {
+//            try {
+//                dbxFs.syncNowAndWait();
+//                result = true;
+//            } catch (DbxException e) {
+//                result = false;
+//                e.printStackTrace();
+//            }
+//            return result;
+//        }
+//    }
     private void doDropboxTest() {
         mTestOutput.setText("Dropbox Sync API Version "+DbxAccountManager.SDK_VERSION_NAME+"\n");
-//        try {
-//            final String TEST_DATA = "Hello Dropbox";
-//            final String TEST_FILE_NAME = "hello_dropbox.txt";
-//            DbxPath testPath = new DbxPath(DbxPath.ROOT, TEST_FILE_NAME);
-//
-//            // Create DbxFileSystem for synchronized file access.
-//            DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-//
-//            // Print the contents of the root folder.  This will block until we can
-//            // sync metadata the first time.
-//            List<DbxFileInfo> infos = dbxFs.listFolder(DbxPath.ROOT);
-//            mTestOutput.append("\nContents of app folder:\n");
-//            for (DbxFileInfo info : infos) {
-//                mTestOutput.append("    " + info.path + ", " + info.modifiedTime + '\n');
-//            }
-//
-//            // Create a test file only if it doesn't already exist.
-//            if (!dbxFs.exists(testPath)) {
-//                DbxFile testFile = dbxFs.create(testPath);
-//                try {
-//                    testFile.writeString(TEST_DATA);
-//                } finally {
-//                    testFile.close();
-//                }
-//                mTestOutput.append("\nCreated new file '" + testPath + "'.\n");
-//            }
-//
-//            // Read and print the contents of test file.  Since we're not making
-//            // any attempt to wait for the latest version, this may print an
-//            // older cached version.  Use getSyncStatus() and/or a listener to
-//            // check for a new version.
-//            if (dbxFs.isFile(testPath)) {
-//                String resultData;
-//                DbxFile testFile = dbxFs.open(testPath);
-//                try {
-//                    resultData = testFile.readString();
-//                } finally {
-//                    testFile.close();
-//                }
-//                mTestOutput.append("\nRead file '" + testPath + "' and got data:\n    " + resultData);
-//            } else if (dbxFs.isFolder(testPath)) {
-//                mTestOutput.append("'" + testPath.toString() + "' is a folder.\n");
-//            }
-//        } catch (IOException e) {
-//            mTestOutput.setText("Dropbox test failed: " + e);
-//        }
+        try {
+            final String TEST_DATA = "Hello Dropbox";
+            final String TEST_FILE_NAME = "001.png";
+            DbxPath testPath = new DbxPath(new DbxPath("/Apps/Comic%20Munchies/one%20piece%20chapter%20725"), TEST_FILE_NAME);
+
+            // Create DbxFileSystem for synchronized file access.
+            dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
+
+//            dbxFs.syncNowAndWait();
+
+            // Print the contents of the root folder.  This will block until we can
+            // sync metadata the first time.
+            List<DbxFileInfo> infos = dbxFs.listFolder(DbxPath.ROOT);
+            mTestOutput.append("\nContents of app folder:\n");
+            for (DbxFileInfo info : infos) {
+                mTestOutput.append("    " + info.path + ", " + info.modifiedTime + '\n');
+            }
+
+            // Create a test file only if it doesn't already exist.
+            if (!dbxFs.exists(testPath)) {
+                DbxFile testFile = dbxFs.create(testPath);
+                try {
+                    testFile.writeString(TEST_DATA);
+                } finally {
+                    testFile.close();
+                }
+                mTestOutput.append("\nCreated new file '" + testPath + "'.\n");
+            }
+
+            // Read and print the contents of test file.  Since we're not making
+            // any attempt to wait for the latest version, this may print an
+            // older cached version.  Use getSyncStatus() and/or a listener to
+            // check for a new version.
+            if (dbxFs.isFile(testPath)) {
+                String resultData;
+                DbxFile testFile = dbxFs.open(testPath);
+                try {
+                    resultData = testFile.readString();
+                } finally {
+                    testFile.close();
+                }
+                mTestOutput.append("\nRead file '" + testPath + "' and got data:\n    " + resultData);
+            } else if (dbxFs.isFolder(testPath)) {
+                mTestOutput.append("'" + testPath.toString() + "' is a folder.\n");
+            }
+        } catch (IOException e) {
+            mTestOutput.setText("Dropbox test failed: " + e);
+        }
     }
 }
