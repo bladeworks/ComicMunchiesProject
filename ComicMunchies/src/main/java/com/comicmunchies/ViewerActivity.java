@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.comicmunchies.common.Global;
 import com.comicmunchies.pojo.Page;
@@ -54,6 +55,8 @@ public class ViewerActivity extends Activity{
     private class ImagePagerAdapter extends PagerAdapter {
 
         List<Page> pages;
+        List<String> frames = new ArrayList<String>();
+        int pagePosition = -1;
 
         public ImagePagerAdapter(List<Page> p) {
             pages = p;
@@ -61,29 +64,40 @@ public class ViewerActivity extends Activity{
 
         @Override
         public int getCount() {
-            return pages.size();
+            if (pagePosition < (pages.size() - 1)) {
+                return frames.size() + 10;
+            }
+            return frames.size();
         }
 
         @Override
         public boolean isViewFromObject(View view, Object o) {
-            return view == ((ImageView) o);
+            return view == o;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Context context = ViewerActivity.this;
+            if (position >= frames.size()) {
+                // frame extraction
+                if (pagePosition < (pages.size() - 1)) {
+                    pagePosition++;
+                    frames.add(pages.get(pagePosition).getPath());
+                    frames.add(pages.get(pagePosition).getPath());
+                    notifyDataSetChanged();
+                }
+            }
             ImageView imageView = new ImageView(context);
             int padding = context.getResources().getDimensionPixelOffset(R.dimen.padding_medium);
             imageView.setPadding(padding, padding, padding, padding);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(pages.get(position).getPath()));
-            ((ViewPager) container).addView(imageView, 0);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(frames.get(position)));
+            container.addView(imageView, 0);
             return imageView;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView((ImageView) object);
+            container.removeView((View)object);
         }
     }
 }
