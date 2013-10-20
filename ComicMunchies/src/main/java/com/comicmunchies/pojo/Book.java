@@ -10,15 +10,6 @@ public class Book {
     private String title;
     private String desc;
     private String thumbUrl;
-    private List<Page> pages;
-
-    public List<Page> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<Page> pages) {
-        this.pages = pages;
-    }
 
     public String getTitle() {
         return title;

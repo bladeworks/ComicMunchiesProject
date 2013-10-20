@@ -5,8 +5,4 @@ package com.comicmunchies.common;
  */
 public interface Constants {
 
-    public static String KEY_TITLE = "title";
-    public static String KEY_DESC = "desc";
-    public static String KEY_IMAGE = "image";
-
 }
