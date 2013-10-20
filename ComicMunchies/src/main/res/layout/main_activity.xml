@@ -6,6 +6,19 @@
     android:background="#0099cc"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/link_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/link_button"/>
+
+    <TextView
+        android:id="@+id/test_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
