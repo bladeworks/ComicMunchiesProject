@@ -24,6 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_alignTop="@+id/left_thumbnail"
         android:layout_toRightOf="@+id/left_thumbnail"
+        android:background="@android:color/transparent"
+        android:textSize="20dp"
+        android:textColor="@android:color/background_dark"
         android:text="title"/>
     <TextView
         android:id="@+id/book_desc"
@@ -31,13 +34,16 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="1dp"
         android:layout_below="@+id/book_title"
+        android:background="@android:color/transparent"
         android:layout_toRightOf="@+id/left_thumbnail"
         android:text="desc"/>
-    <ImageView
+    <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:src="@android:drawable/arrow_down_float"
         android:layout_alignParentRight="true"
+        android:text="&gt;"
+        android:textSize="40dp"
+        android:background="@android:color/transparent"
         android:layout_centerVertical="true" />
 
 </RelativeLayout>
