@@ -15,6 +15,7 @@ public class Book {
     /*
     This is the local file path for the thumb such as /data/data/com.comicmunchies/thumb.jpg.
      */
+
     private String thumbUrl;
 
     private int readingPage = -1;
@@ -30,6 +31,8 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
+    public String getBookName() {return bookName;}
 
     public void setTitle(String title) {
         this.title = title;

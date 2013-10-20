@@ -70,6 +70,35 @@ public class MainActivity extends Activity {
         }
 
         {
+            Book book = new Book("breaker");
+            book.setTitle("Breaker: New waves");
+            book.setDesc("Continuation of The Breaker with new allies and enemies.");
+            book.setThumbUrl("/sdcard/Pictures/test/breaker/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("naruto");
+            book.setTitle("Naruto");
+            book.setDesc("Follow Naruto on his way to become a Ninja!");
+            book.setThumbUrl("/sdcard/Pictures/test/naruto/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("onepiece");
+            book.setTitle("A new era of pirate, can they find the one piece");
+            book.setDesc("Desc goes to here");
+            book.setThumbUrl("/sdcard/Pictures/test/onepiece/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("bleach");
+            book.setTitle("Bleach");
+            book.setDesc("Desc goes to here");
+            book.setThumbUrl("/sdcard/Pictures/test/bleach/cover.jpg");
+            data.add(book);
+        }
+
+        {
             Book book = new Book("vampire");
             book.setTitle("Vampire Knight");
             book.setDesc("Desc goes to here");
