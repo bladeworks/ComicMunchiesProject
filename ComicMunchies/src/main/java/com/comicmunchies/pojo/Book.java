@@ -10,6 +10,8 @@ public class Book {
     private String title;
     private String desc;
 
+    private String bookName;
+    public Book(String name) { this.bookName = name; }
     /*
     This is the local file path for the thumb such as /data/data/com.comicmunchies/thumb.jpg.
      */

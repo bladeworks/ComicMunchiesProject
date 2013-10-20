@@ -35,18 +35,45 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "t6aisc2sisxwcj5", "1b59otfba2ivxma");
-
         setContentView(R.layout.main_activity);
 
-        data = new ArrayList<Book>();
-        for (int i = 0; i < 5; i++ ){
+        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "bqmodvepz6wz8mh", "nsb9k29gdqfdz0u");
 
-            Book book = new Book();
-//            if (i > 2) book.setReadingPage(10);
-            book.setTitle("title " + i);
+        data = new ArrayList<Book>();
+        {
+            Book book = new Book("breaker");
+            book.setTitle("Breaker: New waves");
+            book.setDesc("Continuation of The Breaker with new allies and enemies.");
+            book.setThumbUrl("/sdcard/Pictures/test/breaker/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("naruto");
+            book.setTitle("Naruto");
+            book.setDesc("Follow Naruto on his way to become a Ninja!");
+            book.setThumbUrl("/sdcard/Pictures/test/naruto/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("onepiece");
+            book.setTitle("A new era of pirate, can they find the one piece");
             book.setDesc("Desc goes to here");
-            book.setThumbUrl("/sdcard/mofunenglish/data/level0/poster_80x80/406.jpg");
+            book.setThumbUrl("/sdcard/Pictures/test/onepiece/cover.jpg");
+            data.add(book);
+        }
+        {
+            Book book = new Book("bleach");
+            book.setTitle("Bleach");
+            book.setDesc("Desc goes to here");
+            book.setThumbUrl("/sdcard/Pictures/test/bleach/cover.jpg");
+            data.add(book);
+        }
+
+        {
+            Book book = new Book("vampire");
+            book.setTitle("Vampire Knight");
+            book.setDesc("Desc goes to here");
+            book.setThumbUrl("/sdcard/Pictures/test/vampire/cover.jpg");
             data.add(book);
         }
 
