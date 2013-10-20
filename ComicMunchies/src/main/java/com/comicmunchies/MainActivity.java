@@ -35,9 +35,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "t6aisc2sisxwcj5", "1b59otfba2ivxma");
-
         setContentView(R.layout.main_activity);
+
+        mDbxAcctMgr = DbxAccountManager.getInstance(getApplicationContext(), "bqmodvepz6wz8mh", "nsb9k29gdqfdz0u");
 
         data = new ArrayList<Book>();
         for (int i = 0; i < 5; i++ ){
